@@ -7,14 +7,17 @@ $dbname = "markoblog";
 
 if(isset($_POST['signin'])){
 
-    $username = $_POST['user_username'];
-    $password = $_POST['user_password'];
-        
+    $usersname = $_POST['user_username'];
+    $pssword = $_POST['user_password'];
+
+
+
     
     login($conn, $usersname, $pssword);
     
 
 }else{
+    header("Location: ../index.php");
     exit();
 }
 
