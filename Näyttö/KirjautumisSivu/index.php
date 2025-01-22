@@ -8,7 +8,12 @@
 </head>
 <body>
     <h1>Kirjaudu Sisään</h1>
-    <form action="" method="post">
+    <form action="actions/signin.php" method="post">
+        <?php
+        
+
+
+        ?>
         <div class="imgcontainer">
 
         </div>
