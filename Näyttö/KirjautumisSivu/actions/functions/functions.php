@@ -61,7 +61,7 @@ function createAccount($conn, $usersname, $pssword){
 
 }
 
-login($conn, $usersname, $pssword){
+function login($conn, $usersname, $pssword){
     $sql = "SELECT * FROM users WHERE usersname =?";
     $stmt = mysqli_stmt_init ($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
