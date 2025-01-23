@@ -9,12 +9,12 @@
 </head>
 <body>
 <header>
-    <h1>The Official Super Marko Brothers Blog site</h1>
+    <h1>The Official <br> Super Marko Brothers <br> Blog site</h1>
     <div class="nav">
             <table>
                 <tr>
                     <th>
-                        <a class="nav-button" href="#">koti</a>
+                        <a class="nav-button" href="./Home.php">koti</a>
                     </th>
                     <th>
                         <a class="nav-button" href="./Main/Login.php">login</a>
@@ -75,6 +75,8 @@ if ($result_posts->num_rows > 0) {
 
 $conn->close();
 ?>
-
+<footer>
+    <p>Super Marko Blogin sinulle tarjoaa BurntPotatoGames.OY</p>
+</footer>
 </body>
 </html>
