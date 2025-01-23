@@ -1,0 +1,43 @@
+html {
+background-image: url("../smb_ico.png");
+background-size: cover;
+background-blend-mode: saturation(0%, 10%, 2%);
+margin: 0px;
+background-repeat: no-repeat;
+background-position: center;
+height: 100%;
+width:100%;
+}
+.kysely{
+    margin:auto;
+    background-color: rgb(222, 214, 166);
+    width: 300px;
+    padding: 40px;
+    padding-top: 20px;
+    border-radius: 40px;
+    margin-top: 20%;
+}
+.textbox {
+    background-color: rgb(223, 196, 17);
+    padding: 5px;
+    margin: 5px;
+    border: solid 3px rgb(183, 162, 2);
+    border-radius: 10px;
+}
+
+.login{
+    background-color: rgb(223, 196, 17);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px;
+
+}
+.cancelbtn{
+    background-color: rgb(222, 214, 166);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+#bottomshit {
+    margin-top: 30px;
+}
