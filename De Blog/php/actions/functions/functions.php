@@ -5,7 +5,7 @@ $password = "";
 $dbname = "markoblog";
 
 
-function singupFieldEmpty($usersname, $pssword){
+function signupFieldEmpty($usersname, $pssword){
     $result;
     if(empty($usersname) || empty($pssword)){
         $result = true;
@@ -16,21 +16,13 @@ function singupFieldEmpty($usersname, $pssword){
 }
 
 
-function notValidUsersname($usersname){
-    $result;
-    if(!filter_var($usersname, FILTER_VALIDATE_EMAIL)){
-
-    }else{
-        $result = false;
-    }
-}
 
 function usersnameExist($conn, $usersname){
-    $sql = "SELECT * FROM users WHERE usersname =?";
+    $sql = "SELECT * FROM users WHERE name =?";
     $stmt = mysqli_stmt_init ($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        //Lokaatio tähän
-        exit()
+        header("Location: ../newaccount.php");
+        exit();
     }
     mysqli_stmt_bind_param($stmt, 's', $usersname);
     mysqli_stmt_execute($stmt);
@@ -42,13 +34,16 @@ function usersnameExist($conn, $usersname){
     return $result;
 }
 
+
 function createAccount($conn, $usersname, $pssword){
-    $sql = "INSERT INTO users (usersname, pssword) VALUES (?,?);";
-    $stmt = mysqli_stmt_init($conn)
+    $sql = "INSERT INTO users (name, pass) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        //Lokaatio tähän
-        exit()
+        header("Location: ../newaccount.php?err=stmtfailed");
+        exit();
     }
+
+    //$passHashed = password_harsh($pssword, PASSWORD_DEFAULT);
 
     mysqli_stmt_bind_param($stmt, 'ss', $usersname, $pssword);
     mysqli_stmt_execute($stmt);
@@ -56,34 +51,41 @@ function createAccount($conn, $usersname, $pssword){
     session_start();
     $_SESSION['Username'] = $usersname;
     mysqli_stmt_close($stmt);
-    //Ohjattavalle sivulle lokaatio
+    header("Location: ./home.php");
     exit();
 
 }
 
 function login($conn, $usersname, $pssword){
-    $sql = "SELECT * FROM users WHERE usersname =?";
+    $sql = "SELECT * FROM users WHERE name =?;";
     $stmt = mysqli_stmt_init ($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        //Lokaatio tähän
-        exit()
+        header("Location: ../index.php?err=stmtfailed");
+        exit();
     }
 
 
     mysqli_stmt_bind_param($stmt, 's', $usersname);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
+
     if(!$row = mysqli_fetch_assoc($result)){
         mysqli_stmt_close($stmt);
-        //Eri lokaatio tähän
+        header("Location: ../index.php?err=usernull");
         exit();
     }
-
+    if(!password_verify($pssword)){
+        
+        mysqli_stmt_close($stmt);
+        header("Location: ../index.php?err=wrongpass");
+    }
     session_start();
-    $_SESSION['username'];
+    $_SESSION['username'] = $row['name'];
     $_SESSION['userid'] = $row['id'];
     mysqli_stmt_close($stmt);
-    //Eri lokaatio tähän
+    header("Location: ../Home.php");
 }
+
+
 
 ?>
