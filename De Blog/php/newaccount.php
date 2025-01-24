@@ -9,16 +9,16 @@
             <h2>Tee käyttäjä</h2>
 
             
-            <form action="actions/signup.php">
-                <label for="user_password"><b>Käyttäjänimi</b></label>
-                <input name="user_username" class="textbox" type="text" placeholder="Käyttäjänimi" required>
-                <br>
-                <label for="user_password"><b>Salasana</b></label>
-                <input name="user_password" class="textbox" type="password" placeholder="Salasana" required>
-                <br>
-                <button type="submit" name="signup">Rekisteröidy</button>
+            
+            <label for="user_password"><b>Käyttäjänimi</b></label>
+            <input name="user_username" class="textbox" type="text" placeholder="Käyttäjänimi" required>
+            <br>
+            <label for="user_password"><b>Salasana</b></label>
+            <input name="user_password" class="textbox" type="password" placeholder="Salasana" required>
+            <br>
+            <button type="submit" name="signup">Rekisteröidy</button>
 
-            </form>
+
         </div>
 
 
