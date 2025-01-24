@@ -1,25 +1,23 @@
 <?php include_once 'inc/header.php'; ?>
     <h1>Tee account</h1>
-    <form action="" method="post">
+    <form action="/actions/signup" method="post">
 
   
         
         <div class="container">
-            <p>Get SMB updates</p>
-            <h2>Welcome, Sign up</h2>
+            <p>Saa SMB päivityksiä</p>
+            <h2>Tee käyttäjä</h2>
 
             
             <form action="actions/signup.php">
-                <label for="user_password"><b>Username</b></label>
-                <input name="user_username"type="text" placeholder="Enter Username" required>
+                <label for="user_password"><b>Käyttäjänimi</b></label>
+                <input name="user_username" class="textbox" type="text" placeholder="Käyttäjänimi" required>
                 <br>
-                <label for="user_password"><b>Password</b></label>
-                <input name="user_password"type="password" placeholder="Enter Password" required>
+                <label for="user_password"><b>Salasana</b></label>
+                <input name="user_password" class="textbox" type="password" placeholder="Salasana" required>
                 <br>
-                <button type="submit">Sign up</button>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>
+                <button type="submit" name="signup">Rekisteröidy</button>
+
             </form>
         </div>
 
@@ -27,8 +25,9 @@
 
 
 
-        <div class="container" style="background-color: #f1f1f1;">
-            <span class="psw">Already got an <a href="index.php">account</a>?</span>
+        <div class="container" id="bottomshit">
+            <button type="button" class="cancelbtn"><a href="./Home.php">Peruuta</a></button>
+            <span class="psw">On jo<a href="index.php">käyttäjä</a>?</span>
         </div>
     </form>
     <?php include_once 'inc/footer.php'; ?>
