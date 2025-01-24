@@ -13,7 +13,7 @@
             <label for="user_password"><b>Salasana</b></label>
             <input type="password" class="textbox" placeholder="Enter Password" name="user_password" required>
             <br>
-            <button type="submit">Kirjaudu</button>
+            <button type="submit" name="signin">Kirjaudu</button>
 
 
         </div>
