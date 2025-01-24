@@ -26,55 +26,55 @@
             </table>
         </div>
 </header>
-<?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = ""; // Change this according to your setup
-$dbname = "markoblog";
+<main>
+    <div class="blog">
+        <?php
+        // Database connection
+        $servername = "localhost";
+        $username = "root";
+        $password = ""; 
+        $dbname = "markoblog";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
-// Fetch posts
-$sql_posts = "SELECT post.id, post.text, post.time, users.Name FROM post JOIN users ON post.postid = users.id ORDER BY post.time DESC";
-$result_posts = $conn->query($sql_posts);
+        // Fetch posts
+        $sql_posts = "SELECT post.id, post.text, post.time, users.Name FROM post JOIN users ON post.postid = users.id ORDER BY post.time DESC";
+        $result_posts = $conn->query($sql_posts);
 
-if ($result_posts->num_rows > 0) {
-    while ($row_post = $result_posts->fetch_assoc()) {
-        echo "<div class='post'>";
-        echo "<h2>Kirjoittanut " . htmlspecialchars($row_post['Name']) . " aikaan </h2>";
-        echo "<p>" . date("Y-m-d H:i:s", strtotime($row_post['time'])) . "<p>";
-        echo "<p>" . htmlspecialchars($row_post['text']) . "</p>";
+        if ($result_posts->num_rows > 0) {
+            while ($row_post = $result_posts->fetch_assoc()) {
+                echo "<div class='post'>";
+                echo "<h2>Kirjoittanut " . htmlspecialchars($row_post['Name']) . " aikaan </h2>";
+                echo "<p>" . date("Y-m-d H:i:s", strtotime($row_post['time'])) . "<p>";
+                echo "<p>" . htmlspecialchars($row_post['text']) . "</p>";
 
-        // Fetch comments for the current post
-        $post_id = $row_post['id'];
-        $sql_comments = "SELECT comment.comment, comment.time, users.Name FROM comment JOIN users ON comment.postid = users.id WHERE comment.postid = $post_id ORDER BY comment.time ASC";
-        $result_comments = $conn->query($sql_comments);
+                // Fetch comments for the current post
+                $post_id = $row_post['id'];
+                $sql_comments = "SELECT comment.comment, comment.time, users.Name FROM comment JOIN users ON comment.postid = users.id WHERE comment.postid = $post_id ORDER BY comment.time ASC";
+                $result_comments = $conn->query($sql_comments);
 
-        if ($result_comments->num_rows > 0) {
-            while ($row_comment = $result_comments->fetch_assoc()) {
-                echo "<div class='comment'>";
-                echo "<p>Kommentoinut<strong> " . htmlspecialchars($row_comment['Name']) . "</strong> aikaan " . "<br>".date("Y-m-d H:i:s", strtotime($row_comment['time'])) . "</p>";
-                echo "<p>" . htmlspecialchars($row_comment['comment']) . "</p>";
+                if ($result_comments->num_rows > 0) {
+                    while ($row_comment = $result_comments->fetch_assoc()) {
+                        echo "<div class='comment'>";
+                        echo "<p>Kommentoinut<strong> " . htmlspecialchars($row_comment['Name']) . "</strong> aikaan " . "<br>".date("Y-m-d H:i:s", strtotime($row_comment['time'])) . "</p>";
+                        echo "<p>" . htmlspecialchars($row_comment['comment']) . "</p>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<p>No comments yet.</p>";
+                }
+
                 echo "</div>";
             }
         } else {
-            echo "<p>No comments yet.</p>";
+            echo "<p>No posts available.</p>";
         }
 
-        echo "</div>";
-    }
-} else {
-    echo "<p>No posts available.</p>";
-}
-
-$conn->close();
-?>
+        $conn->close();
+        ?>
+    </div>
+<main>
 <footer>
     <p>Super Marko Blogin sinulle tarjoaa BurntPotatoGames.OY</p>
 </footer>
