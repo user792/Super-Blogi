@@ -51,7 +51,7 @@ function createAccount($conn, $usersname, $pssword){
     session_start();
     $_SESSION['Username'] = $usersname;
     mysqli_stmt_close($stmt);
-    header("Location: ./home.php");
+    header("Location: ../home.php");
     exit();
 
 }
