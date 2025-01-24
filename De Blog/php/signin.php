@@ -5,7 +5,7 @@ session_start();
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = ""; // Adjust based on your setup
+$password = "";
 $dbname = "markoblog";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
