@@ -5,9 +5,7 @@
 
             
             <div class="container">
-                
-                <h2>Tervettuloa ja kirjaudu</h2>
-                <p>saat SMB päivityksiä</p>
+            
     <?php
     if(isset($_GET['err'])){
         $error = $_GET['err'];
