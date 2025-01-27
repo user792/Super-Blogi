@@ -1,41 +1,75 @@
-<?php include_once 'inc/header.php'; ?>
-    <div class="kysely">
-        <h1>Kirjaudu Sisään</h1>
-        <form action="./actions/signin.php" method="post">
+<?php
+// Start session
+session_start();
 
-            
-            <div class="container">
-            
-    <?php
-    if(isset($_GET['err'])){
-        $error = $_GET['err'];
-        if($error == 'fieldempty'){
-            echo"<p style?'color:red;'>Täytä kaikki kentät</p>";
-        }else if($error == 'usernull'){
-            echo"<p style='color:red;'>Käyttäjää ei ole olemassa</p>";
-        }else if($error == 'stmtfailed'){
-            echo"<p style='color:red;'>Virhe</p>";
-        }else if($error == 'wrongpass'){
-            echo"<p style='color:red;'>Väärät kirjautumistiedot</p>";
-        }
-    
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "markoblog";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Initialize error message
+$error = "";
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $conn->real_escape_string($_POST['name']);
+    $pass = $conn->real_escape_string($_POST['password']);
+
+    // Query to check user credentials
+    $sql = "SELECT id, Name, writer FROM users WHERE Name = '$name' AND pass = '$pass'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        // Fetch user details
+        $user = $result->fetch_assoc();
+        $_SESSION['user_id'] = $user['id']; // Store user ID in session
+        $_SESSION['username'] = $user['Name']; // Store username in session
+        $_SESSION['is_writer'] = $user['writer']; // Store writer status (0 or 1)
+
+        // Redirect to the homepage
+        header("Location: home.php");
+        exit;
+    } else {
+        $error = "Antamasi Käyttäjänimi ja salasana eivät täsmää.";
     }
-    ?>
-                <label for="user_name"><b>Käyttäjänimi</b></label>
-                <input type="text" class="textbox" placeholder="Käyttäjänimi" name="user_username" required>
-                <br>
-                <label for="user_password"><b>Salasana</b></label>
-                <input type="password" class="textbox" placeholder="Enter Password" name="user_password" required>
-                <br>
-                <button type="submit" name="signin">Kirjaudu</button>
+}
 
+$conn->close();
+?>
 
-            </div>
-
-            <div class="container" id="bottomshit">
-                    <button type="button" class="cancelbtn"><a href="./Home.php">Peruuta</a></button>
-                    <span class="psw"><a href="newaccount.php">Unohtuiko</a>?</span>
-            </div>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <link rel="icon" href="../Markoblog.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirjaudu sisään</title>
+    <link rel="stylesheet" href="../CSS/signin.css">
+</head>
+<body>
+    <div class="kysely">
+        <h1>Kirjaudu sisään</h1>
+        <form method="post" action="signin.php">
+            <?php if ($error): ?>
+                <p class="error"><?= htmlspecialchars($error) ?></p>
+            <?php endif; ?>
+            <label for="name">Käyttäjänimi:</label><br>
+            <input class="textbox" type="text" id="name" name="name" required><br><br>
+            <label for="password">Salasana:</label><br>
+            <input class="textbox" type="password" id="password" name="password" required><br><br>
+            <button class="login" type="submit">Kirjaudu</button>
         </form>
+        <div class="cancelbtn">
+            <a href="./Home.php">Takaisin</a>
+        </div>
     </div>
-<?php include_once 'inc/footer.php'; ?>
+</body>
+</html>
