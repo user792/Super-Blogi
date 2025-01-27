@@ -1,13 +1,12 @@
 <?php include_once 'inc/header.php'; ?>
     <div class="kysely">
-        <h1>Tee account</h1>
+        <h1>Tee käyttäjä</h1>
         <form action="./actions/signup.php" method="post">
 
     
             
             <div class="container">
-                <p>Saa SMB päivityksiä</p>
-                <h2>Tee käyttäjä</h2>
+
         <?php
         if(isset($_GET['err'])){
             $error = $_GET['err'];
