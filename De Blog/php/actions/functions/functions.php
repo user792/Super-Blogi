@@ -57,33 +57,26 @@ function createAccount($conn, $usersname, $pssword){
 }
 
 function login($conn, $usersname, $pssword){
-    $sql = "SELECT * FROM users WHERE name =?;";
-    $stmt = mysqli_stmt_init ($conn);
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: ../index.php?err=stmtfailed");
-        exit();
-    }
+    $name = $conn->real_escape_string($_POST['name'] = $usersname);
+    $pass = $conn->real_escape_string($_POST['password'] = $pssword);
 
+    $sql = "SELECT id, Name, writer FROM users WHERE Name = '$name' AND pass = '$pass'";
+    $result = $conn->query($sql);
 
-    mysqli_stmt_bind_param($stmt, 's', $usersname);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if(!$row = mysqli_fetch_assoc($result)){
+    if ($result->num_rows == 1) {
+        session_start();
+        $_SESSION['username'] = $row['name'];
+        $_SESSION['userid'] = $row['id'];
         mysqli_stmt_close($stmt);
-        header("Location: ../index.php?err=usernull");
-        exit();
+        header("Location: ../Home.php");
+
+        // Redirect to the homepage
+        header("Location: ../home.php");
+        exit;
+    } else {
+        $error = "Antamasi Käyttäjänimi ja salasana eivät täsmää.";
     }
-    if(!password_verify($pssword)){
-        
-        mysqli_stmt_close($stmt);
-        header("Location: ../index.php?err=wrongpass");
-    }
-    session_start();
-    $_SESSION['username'] = $row['name'];
-    $_SESSION['userid'] = $row['id'];
-    mysqli_stmt_close($stmt);
-    header("Location: ../Home.php");
+
 }
 
 
