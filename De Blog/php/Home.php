@@ -17,10 +17,10 @@
                         <a class="nav-button" href="./Home.php">koti</a>
                     </th>
                     <th>
-                        <a class="nav-button" href="./signin.php">login</a>
+                        <a class="nav-button" href="./index.php">login</a>
                     </th>
                     <th>
-                        <a class="nav-button" href="./Singup.php">signup</a>
+                        <a class="nav-button" href="./newaccount.php">signup</a>
                     </th>
                 </tr>
             </table>
