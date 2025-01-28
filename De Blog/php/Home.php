@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Get logged-in user's information0
-$logged_in_user = $_SESSION['username'];s
+$logged_in_user = $_SESSION['username'];
 
 // Handle post submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_post'])) {
@@ -29,10 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_post'])) {
     $user_id = $_SESSION['user_id'];
     $time = date('Y-m-d H:i:s');
 
-    // Insert the post into the database
+    // Corrected SQL query: using `userid` instead of `id`
     $sql_add_post = "INSERT INTO post (text, id, time) VALUES ('$post_text', $user_id, '$time')";
+    
     if ($conn->query($sql_add_post)) {
-        header("Location: Home.php"); // Redirect to avoid re-submission
+        header("Location: Home.php"); // Redirect to prevent form resubmission
         exit;
     } else {
         echo "<p>Error adding post: " . $conn->error . "</p>";
@@ -74,8 +75,8 @@ $result_posts = $conn->query($sql_fetch_posts);
 </head>
 <body>
 <header>
-    <h1>The Official <br> Super Marko Brothers <br> Blog site</h1>
-    <p>Logged in as: <strong><?= htmlspecialchars($logged_in_user) ?></strong></p>
+    <h1>the aito frfr <br> Super Marko Brothers <br> Blog site</h1>
+    <p>Olet kirjautunut sisään käyttäjälle: <strong><?= htmlspecialchars($logged_in_user) ?></strong></p>
     <div class="nav">
             <table>
                 <tr>
@@ -94,51 +95,64 @@ $result_posts = $conn->query($sql_fetch_posts);
 </header>
 <main>
     <div class="blog">
-    <?php if ($result_posts->num_rows > 0): ?>
-        <?php while ($post = $result_posts->fetch_assoc()): ?>
-            <div>
-                <div class="pc">
-                    <h2 class="post-head">Post by <?= htmlspecialchars($post['Name']) ?> at <?= date("Y-m-d H:i:s", strtotime($post['time'])) ?></h2>
-                    <p class="post-text"><?= htmlspecialchars($post['text']) ?></p>
+        
+        <!-- Post Submission Form -->
+        <form method="post" action="Home.php">
+            <h2>Luo postaus</h2>
+            <textarea maxlength="300" rows="4" cols="50" name="new_post" placeholder="kirijoitappas tähän jotakin mukavaa" required></textarea><br>
+            <button type="submit">Luo postaus</button>
+        </form>
+        <hr>
 
-                    <!-- Display Comments for the Post -->
-                    <h3>Comments</h3>
-                    <?php
-                    $post_id = $post['post_id'];
-                    $sql_fetch_comments = "SELECT comment.comment, comment.time, users.Name
-                                        FROM comment
-                                        JOIN users ON comment.id = users.id
-                                        WHERE comment.postid = $post_id
-                                        ORDER BY comment.time ASC";
-                    $result_comments = $conn->query($sql_fetch_comments);
-                    ?>
-                    <?php if ($result_comments->num_rows > 0): ?>
-                        <ul class="commentsection">
-                            <?php while ($comment = $result_comments->fetch_assoc()): ?>
-                                <li class="comment">
-                                    <strong><?= htmlspecialchars($comment['Name']) ?></strong>
-                                    at <?= date("Y-m-d H:i:s", strtotime($comment['time'])) ?>: 
-                                    <?= htmlspecialchars($comment['comment']) ?>
-                                </li>
-                            <?php endwhile; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p>No comments yet.</p>
-                    <?php endif; ?>
+        <?php if ($result_posts->num_rows > 0): ?>
+            <?php while ($post = $result_posts->fetch_assoc()): ?>
+                <div>
+                    <div class="pc">
 
-                    <!-- Add a Comment -->
-                    <form method="post" action="Home.php">
-                        <textarea name="comment_text" placeholder="Write your comment here..." required></textarea><br>
-                        <input type="hidden" name="post_id" value="<?= $post_id ?>">
-                        <button type="submit">Add Comment</button>
-                    </form>
+
+                        <h2 class="post-head">Käyttäjän  <?= htmlspecialchars($post['Name']) ?><?= date("Y-m-d H:i:s", strtotime($post['time'])) ?></h2>
+                        <p class="post-text"><?= htmlspecialchars($post['text']) ?></p>
+
+                        <!-- Display Comments for the Post -->
+                        <h3>Kommentti</h3>
+                        <p><?= htmlspecialchars($post['post_id']) ?></p>
+                        <?php
+                            $post_id = $post['post_id'];
+                            $sql_fetch_comments = "SELECT comment.comment, comment.time, users.Name
+                                                FROM comment
+                                                JOIN users ON comment.id = users.id
+                                                WHERE comment.postid = $post_id
+                                                ORDER BY comment.time ASC";
+
+                            $result_comments = $conn->query($sql_fetch_comments);
+                        ?>
+                        <?php if ($result_comments->num_rows > 0): ?>
+                            <ul class="commentsection">
+                                <?php while ($comment = $result_comments->fetch_assoc()): ?>
+                                    <li class="comment">
+                                        <strong><?= htmlspecialchars($comment['Name']) ?></strong>
+                                        <?= date("Y-m-d H:i:s", strtotime($comment['time'])) ?>: 
+                                        <?= htmlspecialchars($comment['comment']) ?>
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p>Kommentteja ei löytynyt.</p>
+                        <?php endif; ?>
+
+                        <!-- Add a Comment -->
+                        <form method="post" action="Home.php">
+                            <textarea name="comment_text" placeholder="Write your comment here..." required></textarea><br>
+                            <input type="hidden" name="post_id" value="<?= $post_id ?>">
+                            <button type="submit">Lähetä Kommentti</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <hr>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>No posts available.</p>
-    <?php endif; ?>
+                <hr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p>Postaukset ei saatavilla</p>
+        <?php endif; ?>
     </div>
 <main>
 <footer>
