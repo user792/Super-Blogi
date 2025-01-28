@@ -67,7 +67,6 @@ function login($conn, $usersname, $pssword){
         session_start();
         $_SESSION['username'] = $row['name'];
         $_SESSION['userid'] = $row['id'];
-        mysqli_stmt_close($stmt);
         header("Location: ../Home.php");
 
         // Redirect to the homepage
