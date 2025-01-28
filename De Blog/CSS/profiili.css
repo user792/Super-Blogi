@@ -7,20 +7,23 @@ body,html {
 
 /* Käyttäjänimi*/
 h1 {
-    margin: auto;
-    width: 50%;
+    width: 800px;
     padding: 10px;
-    margin-top: 2%;
+    margin-top: 0%;
+    margin-left: 40%;
     text-align: center;
+    font-size: 400%;
+    scale: 200%;
   }
 
 /* Käyttäjän profiilikuva */
 .kuva {
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     padding: 10px;
     margin-top: 10%;
-    margin-left: 35%;
-    border: 6px solid;
+    margin-left: 40%;
+    border: 15px solid;
     border-radius: 1000px;
+    scale: 80%;
 }
