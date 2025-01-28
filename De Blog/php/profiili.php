@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="../CSS/profiili.css">
 </head>
 <body>
-        <img class="kuva" src="PP/54.png" >
-    <h1>You is da one that accessed this site without proper authorization</h1>
+        <!-- Käyttäjän profiilikuva-->
+        <img class="kuva" src="../PP/54.png" >
+        
+    <!-- Käyttäjän käyttäjänimi-->
+    <h1>[Insert Name]</h1>
 </body>
 </html>
 <?php
