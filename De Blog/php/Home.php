@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment_text'], $_POST
 }
 
 // Fetch all posts
-$sql_fetch_posts = "SELECT post.id AS post_id, post.text, post.time, users.Name
+$sql_fetch_posts = "SELECT post.postid AS post_id, post.text, post.time, users.Name
                     FROM post
                     JOIN users ON post.id = users.id
                     ORDER BY post.time DESC";
