@@ -66,7 +66,7 @@ function login($conn, $usersname, $pssword){
         session_start();
         $row = $result->fetch_assoc();
         $_SESSION['username'] = $row['name'];
-        $_SESSION['userid'] = $row['id'];
+        $_SESSION['user_id'] = $row['id'];
         $_SESSION['is_writer'] = $row['writer'];
 
         header("Location: ../Home.php");
