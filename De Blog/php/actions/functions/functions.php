@@ -68,10 +68,7 @@ function login($conn, $usersname, $pssword){
         $_SESSION['username'] = $row['name'];
         $_SESSION['userid'] = $row['id'];
         header("Location: ../Home.php");
-
-        // Redirect to the homepage
-        header("Location: ../home.php");
-        exit;
+        exit();
     } else {
         $error = "Antamasi Käyttäjänimi ja salasana eivät täsmää.";
     }
