@@ -11,14 +11,10 @@
     <?php
     if(isset($_GET['err'])){
         $error = $_GET['err'];
-        if($error == 'fieldempty'){
-            echo"<p style?'color:red;'>Täytä kaikki kentät</p>";
-        }else if($error == 'usernull'){
-            echo"<p style='color:red;'>Käyttäjää ei ole olemassa</p>";
-        }else if($error == 'stmtfailed'){
+        if($error == 'stmtfailed'){
             echo"<p style='color:red;'>Virhe</p>";
-        }else if($error == 'wrongpass'){
-            echo"<p style='color:red;'>Väärät kirjautumistiedot</p>";
+        }else if($error == 'wrong'){
+            echo"<p style='color:red;'>Käyttäjä nimi ja salasana eivät täsmää.</p>";
         }
     
     }
