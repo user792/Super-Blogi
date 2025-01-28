@@ -115,7 +115,7 @@ $result_posts = $conn->query($sql_fetch_posts);
 
                         <!-- Display Comments for the Post -->
                         <h3>Kommentti</h3>
-                        <p><?= htmlspecialchars($post['post_id']) ?></p>
+                        
                         <?php
                             $post_id = $post['post_id'];
                             $sql_fetch_comments = "SELECT comment.comment, comment.time, users.Name
