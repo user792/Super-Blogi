@@ -1,92 +1,43 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "markoblog";
+<?php include_once 'inc/header.php'; ?>
+    <div class="kysely">
+        <h1>Kirjaudu Sisään</h1>
+        <form action="./actions/signin.php" method="post">
 
-
-function signupFieldEmpty($usersname, $pssword){
-    $result;
-    if(empty($usersname) || empty($pssword)){
-        $result = true;
-    }else{
-        $result = false;
+            
+            <div class="container">
+                
+                <h2>Tervettuloa ja kirjaudu</h2>
+                <p>saat SMB päivityksiä</p>
+    <?php
+    if(isset($_GET['err'])){
+        $error = $_GET['err'];
+        if($error == 'fieldempty'){
+            echo"<p style?'color:red;'>Täytä kaikki kentät</p>";
+        }else if($error == 'usernull'){
+            echo"<p style='color:red;'>Käyttäjää ei ole olemassa</p>";
+        }else if($error == 'stmtfailed'){
+            echo"<p style='color:red;'>Virhe</p>";
+        }else if($error == 'wrongpass'){
+            echo"<p style='color:red;'>Väärät kirjautumistiedot</p>";
+        }
+    
     }
-    return $result;
-}
+    ?>
+                <label for="user_name"><b>Käyttäjänimi</b></label>
+                <input type="text" class="textbox" placeholder="Käyttäjänimi" name="user_username" required>
+                <br>
+                <label for="user_password"><b>Salasana</b></label>
+                <input type="password" class="textbox" placeholder="Enter Password" name="user_password" required>
+                <br>
+                <button type="submit" name="signin">Kirjaudu</button>
 
 
+            </div>
 
-function usersnameExist($conn, $usersname){
-    $sql = "SELECT * FROM users WHERE name =?";
-    $stmt = mysqli_stmt_init ($conn);
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: ../newaccount.php");
-        exit();
-    }
-    mysqli_stmt_bind_param($stmt, 's', $usersname);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
-
-    $result = mysqli_stmt_num_rows($stmt) > 0;
-
-    mysqli_stmt_close($stmt);
-    return $result;
-}
-
-
-function createAccount($conn, $usersname, $pssword){
-    $sql = "INSERT INTO users (name, pass) VALUES (?,?);";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: ../newaccount.php?err=stmtfailed");
-        exit();
-    }
-
-    //$passHashed = password_harsh($pssword, PASSWORD_DEFAULT);
-
-    mysqli_stmt_bind_param($stmt, 'ss', $usersname, $pssword);
-    mysqli_stmt_execute($stmt);
-
-    session_start();
-    $_SESSION['Username'] = $usersname;
-    mysqli_stmt_close($stmt);
-    header("Location: ../home.php");
-    exit();
-
-}
-
-function login($conn, $usersname, $pssword){
-    $sql = "SELECT * FROM users WHERE name =?;";
-    $stmt = mysqli_stmt_init ($conn);
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: ../index.php?err=stmtfailed");
-        exit();
-    }
-
-
-    mysqli_stmt_bind_param($stmt, 's', $usersname);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if(!$row = mysqli_fetch_assoc($result)){
-        mysqli_stmt_close($stmt);
-        header("Location: ../index.php?err=null");
-        exit();
-    }
-    if ($result->num_rows == 1) {
-        // Fetch user details
-        session_start();
-        $_SESSION['username'] = $row['name'];
-        $_SESSION['userid'] = $row['id'];
-        mysqli_stmt_close($stmt);
-        header("Location: ../Home.php");
-
-        exit;
-    } else {
-        $error = "Antamasi Käyttäjänimi ja salasana eivät täsmää.";
-    }
-}
-
-
-?>
+            <div class="container" id="bottomshit">
+                    <button type="button" class="cancelbtn"><a href="./Home.php">Peruuta</a></button>
+                    <span class="psw"><a href="newaccount.php">Unohtuiko</a>?</span>
+            </div>
+        </form>
+    </div>
+<?php include_once 'inc/footer.php'; ?>
