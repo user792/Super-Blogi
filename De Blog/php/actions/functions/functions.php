@@ -5,22 +5,11 @@ $password = "";
 $dbname = "markoblog";
 
 
-function signupFieldEmpty($usersname, $pssword){
-    if(empty($usersname) || empty($pssword)){
-        $result = true;
-    }else{
-        $result = false;
-    }
-    return $result;
-}
-
-
-
 function usersnameExist($conn, $usersname){
     $sql = "SELECT * FROM users WHERE name =?";
     $stmt = mysqli_stmt_init ($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: ../newaccount.php");
+        header("Location: ../newaccount.php?err=username-exists");
         exit();
     }
     mysqli_stmt_bind_param($stmt, 's', $usersname);
@@ -72,7 +61,7 @@ function login($conn, $usersname, $pssword){
         header("Location: ../Home.php");
         exit();
     } else {
-        header("Location: ../index.php?err=stmtfailed");
+        header("Location: ../index.php?err=wrong");
     }
 
 }
