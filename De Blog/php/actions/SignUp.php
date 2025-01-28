@@ -9,13 +9,8 @@ if(isset($_POST['signup'])){
     require_once "../inc/dbinc.php";
     include_once "./functions/functions.php";
 
-    if(signupFieldEmpty($usersname, $pssword) !== false){
-        header("Location: ../newaccount.php?err=fieldempty");
-        exit();
-    }
-
     if(usersnameExist($conn, $usersname)){
-        header("Location: .../newAccount.php?err=username-exists");
+        header("Location: ../newAccount.php?err=username-exists");
         exit();
     }
 
