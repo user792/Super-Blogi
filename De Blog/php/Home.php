@@ -16,12 +16,12 @@ if ($conn->connect_error) {
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: signin.php");
+    header("Location: index.php");
     exit;
 }
 
 // Get logged-in user's information0
-$logged_in_user = $_SESSION['username'];
+$logged_in_user = $_SESSION['username'];s
 
 // Handle post submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_post'])) {
