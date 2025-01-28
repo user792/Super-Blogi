@@ -10,10 +10,8 @@
         <?php
         if(isset($_GET['err'])){
             $error = $_GET['err'];
-            if($error == 'fieldempty'){
-                echo"<p style?'color:red;'>Täytä kaikki kentät</p>";
-            }else if($error == 'username-exists'){
-                echo"<p style='color:red;'>Käyttäjä nimi on jo käytössä</p>";
+            if($error == 'username-exists'){
+                echo"<p style='color:red;'>Käyttäjä nimi on jo viety.</p>";
             }else if($error == 'stmtfailed'){
                 echo"<p style='color:red;'>Virhe</p>";
             }
