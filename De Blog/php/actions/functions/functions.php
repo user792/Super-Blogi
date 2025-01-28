@@ -6,7 +6,6 @@ $dbname = "markoblog";
 
 
 function signupFieldEmpty($usersname, $pssword){
-    $result;
     if(empty($usersname) || empty($pssword)){
         $result = true;
     }else{
@@ -49,7 +48,7 @@ function createAccount($conn, $usersname, $pssword){
     mysqli_stmt_execute($stmt);
 
     session_start();
-    $_SESSION['Username'] = $usersname;
+    $_SESSION['username'] = $usersname;
     mysqli_stmt_close($stmt);
     header("Location: ../home.php");
     exit();
@@ -60,17 +59,20 @@ function login($conn, $usersname, $pssword){
     $name = $conn->real_escape_string($_POST['name'] = $usersname);
     $pass = $conn->real_escape_string($_POST['password'] = $pssword);
 
-    $sql = "SELECT id, Name, writer FROM users WHERE Name = '$name' AND pass = '$pass'";
+    $sql = "SELECT * FROM users WHERE Name = '$name' AND pass = '$pass'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
         session_start();
+        $row = $result->fetch_assoc();
         $_SESSION['username'] = $row['name'];
         $_SESSION['userid'] = $row['id'];
+        $_SESSION['is_writer'] = $row['writer'];
+
         header("Location: ../Home.php");
         exit();
     } else {
-        $error = "Antamasi Käyttäjänimi ja salasana eivät täsmää.";
+        header("Location: ../index.php?err=stmtfailed");
     }
 
 }
