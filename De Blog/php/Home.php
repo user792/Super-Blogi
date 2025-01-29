@@ -70,7 +70,7 @@ $result_posts = $conn->query($sql_fetch_posts);
     <link rel="icon" href="../Markoblog.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Home</title>
+    <title>smb koti</title>
     <link rel="stylesheet" href="../CSS/Home.css">
 </head>
 <body>
@@ -78,11 +78,12 @@ $result_posts = $conn->query($sql_fetch_posts);
 <!-- Profile picture -->
 <a href="./profiili.php">
     <img class="PP" src="../PP/54.png">
+    <p class="PP-txt"> <strong><?= htmlspecialchars($logged_in_user) ?></strong></p>
  </a>
     
 <header>
     <h1>the aito frfr <br> Super Marko Brothers <br> Blog site</h1>
-    <p>Olet kirjautunut sisään käyttäjälle: <strong><?= htmlspecialchars($logged_in_user) ?></strong></p>
+    
     <div class="nav">
             <table>
                 <tr>

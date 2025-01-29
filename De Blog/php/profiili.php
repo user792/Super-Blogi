@@ -1,17 +1,58 @@
+<?php
+session_start();
+
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "markoblog";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit;
+}
+
+// Get logged-in user's information0
+$logged_in_user = $_SESSION['username'];
+?>
 <!DOCTYPE html>
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>profiili</title>
     <link rel="stylesheet" href="../CSS/profiili.css">
+    
 </head>
 <body>
+<div class="nav">
+            <table>
+                <tr>
+                    <th>
+                        <a class="nav-button" href="./Home.php">koti</a>
+                    </th>
+                    <th>
+                        <a class="nav-button" href="./index.php">login</a>
+                    </th>
+                    <th>
+                        <a class="nav-button" href="./newaccount.php">signup</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
         <!-- Käyttäjän profiilikuva-->
         <img class="kuva" src="../PP/54.png" >
         
     <!-- Käyttäjän käyttäjänimi-->
-    <h1>[Insert Name]</h1>
+    <h1><?= htmlspecialchars($logged_in_user) ?></h1>
 </body>
 </html>
 <?php

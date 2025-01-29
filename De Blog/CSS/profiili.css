@@ -27,3 +27,29 @@ h1 {
     border-radius: 1000px;
     scale: 80%;
 }
+.nav {
+    background-color: rgb(128, 128, 128);
+    border-radius: 5px;
+    padding: 20px 10px 20px 8px;
+    width: 260px;
+    margin-left: 10px;
+}
+.nav-button {
+    border-radius:5px;
+    background-color: rgb(200,200,200);
+    margin-left: 10px;
+    padding: 10px;
+    color: rgb(128, 128, 128);
+    text-decoration: none;
+
+    font-weight: 1000;
+    font-size: large;
+}
+.nav-button:hover {
+    border-radius:5px;
+    background-color: rgb(150,150,150);
+    margin-left: 10px;
+    padding: 10px;
+    color: rgb(99, 99, 99);
+    
+}
