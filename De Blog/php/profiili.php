@@ -18,8 +18,15 @@ if ($conn->connect_error) {
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
-}
+}else{
+    $user_id = $_SESSION['user_id'];
+    $pfp = $user_id % 55;
+    $pp = "../pp/$pfp.png";
+    }
 
+    
+
+//(id / 55 - id // 55) * 55
 // Get logged-in user's information0
 $logged_in_user = $_SESSION['username'];
 ?>
@@ -49,7 +56,10 @@ $logged_in_user = $_SESSION['username'];
             </table>
         </div>
         <!-- Käyttäjän profiilikuva-->
-        <img class="kuva" src="../PP/54.png" >
+         <?php 
+
+         ?>
+        <img class="kuva" src="<?php echo $pp ?>" >
         
     <!-- Käyttäjän käyttäjänimi-->
     <h1><?= htmlspecialchars($logged_in_user) ?></h1>

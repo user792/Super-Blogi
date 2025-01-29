@@ -18,7 +18,11 @@ if ($conn->connect_error) {
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
-}
+}else{
+    $user_id = $_SESSION['user_id'];
+    $pfp = $user_id % 55;
+    $pp = "../pp/$pfp.png";
+    }
 
 // Get logged-in user's information0
 $logged_in_user = $_SESSION['username'];
@@ -77,7 +81,7 @@ $result_posts = $conn->query($sql_fetch_posts);
 
 <!-- Profile picture -->
 <a href="./profiili.php">
-    <img class="PP" src="../PP/54.png">
+    <img class="PP" src="<?php echo $pp ?>">
     <p class="PP-txt"> <strong><?= htmlspecialchars($logged_in_user) ?></strong></p>
  </a>
     
@@ -116,8 +120,10 @@ $result_posts = $conn->query($sql_fetch_posts);
                 <div>
                     <div class="pc">
 
-
-                        <h2 class="post-head">Käyttäjän  <?= htmlspecialchars($post['Name']) ?><?= date("Y-m-d H:i:s", strtotime($post['time'])) ?></h2>
+                        <div class="post-head">
+                        <h2>Käyttäjän  <?= htmlspecialchars($post['Name']) ?></h2>
+                        <p><?= date("Y-m-d H:i:s", strtotime($post['time'])) ?></p>
+                        </div>
                         <p class="post-text"><?= htmlspecialchars($post['text']) ?></p>
 
                         <!-- Display Comments for the Post -->

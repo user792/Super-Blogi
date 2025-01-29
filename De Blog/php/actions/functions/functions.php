@@ -36,13 +36,12 @@ function createAccount($conn, $usersname, $pssword){
     mysqli_stmt_bind_param($stmt, 'ss', $usersname, $pssword);
     mysqli_stmt_execute($stmt);
 
-    session_start();
-    $_SESSION['username'] = $usersname;
     mysqli_stmt_close($stmt);
-    header("Location: ../home.php");
+    header("Location: ../index.php");
     exit();
 
 }
+
 
 function login($conn, $usersname, $pssword){
     $name = $conn->real_escape_string($_POST['name'] = $usersname);
